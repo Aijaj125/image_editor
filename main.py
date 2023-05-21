@@ -66,10 +66,7 @@ def rotate_image():
 def brightness():
     global image_paths, image_item, original_image, edited_image
     try:
-        if edited_image is not None:
-            bright_image = edited_image
-        else:
-            bright_image = original_image
+        bright_image = edited_image if edited_image is not None else original_image
         bright_image = bright_image.convert("RGB")
         BrightValue = simpledialog.askfloat("Input", "Enter the value :")
         enhancer = ImageEnhance.Brightness(bright_image)
@@ -86,8 +83,10 @@ def brightness():
 def save_file():
     global edited_image
     if edited_image:
-        save_path = filedialog.asksaveasfilename(defaultextension=".jpg", filetypes=[("JPEG Image", "*.jpg"), ("PNG Image", "*.png")])
-        if save_path:
+        if save_path := filedialog.asksaveasfilename(
+            defaultextension=".jpg",
+            filetypes=[("JPEG Image", "*.jpg"), ("PNG Image", "*.png")],
+        ):
             edited_image.save(save_path)
 
 image_converter = ImageConverter()
